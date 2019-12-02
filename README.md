@@ -10,3 +10,10 @@ chmod +x youtube-dl.sh && ./youtube-dl.sh
 # NOTE use the updated script for one line use
 chmod +x param-youtube-dl.sh
 ./param-youtube-dl.sh -h (for help)
+
+# Extra (1) download a custom youtube list
+vi list # put each complete youtube url on each line
+# then
+while IFS= read -r line; do  bash param-youtube-dl.sh -a $line; done <list
+# or
+while IFS= read -r line; do  bash param-youtube-dl.sh -v $line; done <list
