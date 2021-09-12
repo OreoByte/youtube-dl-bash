@@ -36,7 +36,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ
 https://www.youtube.com/watch?v=3OUneqQqad4
 ```
 
-## Youtube-dl all URLs in the `url.lst file
+## Youtube-dl all URLs in the `url.lst` file
 ```
 chmod +x ./opt_youtube-dl_v1.3.1.sh
 ./opt_youtube-dl_v1.3.1.sh -f url.lst -t mp3
