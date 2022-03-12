@@ -2,14 +2,7 @@
 NOTE; install and update youtube-dl through your Linux distro's package manager
 Enjoy!
 
-# Run script by `Retired`
-	bash youtube-dl.sh
-	or
-	chmod +x youtube-dl.sh && ./youtube-dl.sh
-
-# NOTE use the updated script for one line use `Retired`
-	chmod +x param-youtube-dl.sh
-	./param-youtube-dl.sh -h (for help)
+---
 
 # Then `Retired for old scripts built into opt script`
 	while IFS= read -r line; do  bash param-youtube-dl.sh -a $line; done <list
@@ -37,7 +30,22 @@ https://www.youtube.com/watch?v=3OUneqQqad4
 ```
 
 ## Youtube-dl all URLs in the `url.lst` file
+
 ```
-chmod +x ./opt_youtube-dl_v1.3.1.sh
-./opt_youtube-dl_v1.3.1.sh -f url.lst -t mp3
+chmod +x ./opt_youtube-dl_v1.4.sh
+./opt_youtube-dl_v1.4.sh -f url.lst -t mp3
+```
+
+## Download a video URL that is saved to thesecondary ctrl-v/c clipboard with `xclip` installed
+
+```
+./opt_youtube-dl_v1.4.sh -c <any-string> -t <format>
+./opt_youtube-dl_v1.4.sh -c c -t mp3
+```
+
+## Note that youtube-dl also works with Twitch Vods
+
+```
+./opt_youtube-dl_v1.4.sh -l <url-of-clip-or-complete-vod> -t <format>
+./opt_youtube-dl_v1.4.sh -l http://www.twitch.tv/videos/<video-number> -t mp4
 ```

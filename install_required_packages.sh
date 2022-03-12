@@ -1,4 +1,6 @@
 #!/bin/bash
 # packages that are for the youtube-dl scirpt to work
-sudo apt install ffmpeg xclip -y
+sudo apt install ffmpeg xclip python3-pip -y
 pip3 install youtube-dl --user
+# may not be in python but may be installed through the apt package manager
+sudo apt install -y youtube-dl
