@@ -14,8 +14,31 @@ Enjoy!
 # installing requirements
 `cd youtube-dl-bash && bash ./required_packages.sh`
 
-# Updated for new version 1.3.1 opt_youtube-dl (Now with IFS built in)
-	./opt_youtube-dl_v1.3.1.sh -h
+# Updated for new version  opt_youtube-dl (Now with IFS built in) 
+```
+./opt_youtube-dl.sh
+
+{ Youtube-DL Help Menu. ';..;' }
+-----------------------------------------------------
+-l | A Youtube Link/URL To Download.
+-t | File type (mp3,a,audio) OR (mp4,v,video).
+-f | File with a list of multiple youtube URL to all download. With each URL on its own new line.
+-c | Use the URL saved to the secondary Ctrl-C/Ctrl-v Clipboard. Instead of having put the link in the command with xclip.
+
+Examples:
+# Download video as MP3 file.
+./opt_youtube-dl.sh -t mp3 -l https://youtube.com/watch?=link
+
+# Download video as MP4 file.
+./opt_youtube-dl.sh -l https://Youtube.com/watch?link -t video
+
+# Download from URL file.
+./opt_youtube-dl.sh -f yt_url_list.txt -t audio
+
+# Download a single URL that is saved to your secondary Ctrl-C/Ctrl-V clipboard read with xclip.
+./opt_youtube-dl.sh -c -t mp3
+./opt_youtube-dl.sh -c -t a
+```
 
 # Example. Creating a custom music URL.lst for the `-f` file option
 
@@ -39,8 +62,7 @@ chmod +x ./opt_youtube-dl_v1.4.sh
 ## Download a video URL that is saved to thesecondary ctrl-v/c clipboard with `xclip` installed
 
 ```
-./opt_youtube-dl_v1.4.sh -c <any-string> -t <format>
-./opt_youtube-dl_v1.4.sh -c c -t mp3
+./opt_youtube-dl_v1.4.sh -c -t mp3
 ```
 
 ## Note that youtube-dl also works with Twitch Vods
