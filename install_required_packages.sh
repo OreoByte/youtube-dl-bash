@@ -3,4 +3,5 @@
 sudo apt install ffmpeg xclip python3-pip -y
 pip3 install youtube-dl --user
 # may not be in python but may be installed through the apt package manager
-sudo apt install -y youtube-dl
+#sudo apt install -y youtube-dl
+sudo apt install -y yt-dlp
