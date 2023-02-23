@@ -4,7 +4,7 @@ Enjoy!
 
 ---
 
-# Then `Retired for old scripts built into opt script`
+## Then `Retired for old scripts built into opt script`
 	while IFS= read -r line; do  bash param-youtube-dl.sh -a $line; done <list
 	# or
 	while IFS= read -r line; do  bash param-youtube-dl.sh -v $line; done <list
@@ -16,13 +16,13 @@ Enjoy!
 
 # Updated for new version  opt_youtube-dl (Now with IFS built in) 
 ```
-./opt_youtube-dl.sh
-
 { Youtube-DL Help Menu. ';..;' }
 -----------------------------------------------------
 -l | A Youtube Link/URL To Download.
 -t | File type (mp3,a,audio) OR (mp4,v,video).
 -f | File with a list of multiple youtube URL to all download. With each URL on its own new line.
+-y | Manually set the tool path to (yt-dlp) from (github) if the original path is broken
+-n | Normalize the audio of all the .mp3 files from a desired directory
 -c | Use the URL saved to the secondary Ctrl-C/Ctrl-v Clipboard. Instead of having put the link in the command with xclip.
 
 Examples:
@@ -38,6 +38,13 @@ Examples:
 # Download a single URL that is saved to your secondary Ctrl-C/Ctrl-V clipboard read with xclip.
 ./opt_youtube-dl.sh -c -t mp3
 ./opt_youtube-dl.sh -c -t a
+
+# Download URL with a custom tool path if yt-dlp is NOT in your current path. Like git cloned from GitHub
+./opt_youtube-dl.sh -f url_file -t a -y ~/Music/yt-dlp/yt-dlp.sh
+
+# Normalize Audio
+./opt_youtube-dl.sh -n .
+./opt_youtube-dl.sh -n ~/Music/new_music/
 ```
 
 # Example. Creating a custom music URL.lst for the `-f` file option
@@ -70,4 +77,13 @@ chmod +x ./opt_youtube-dl_v1.4.sh
 ```
 ./opt_youtube-dl_v1.4.sh -l <url-of-clip-or-complete-vod> -t <format>
 ./opt_youtube-dl_v1.4.sh -l http://www.twitch.tv/videos/<video-number> -t mp4
+```
+
+## Downloading a Twitch VOD the browser's cookie when it's Subs only
+
+Not build into the script yet ):
+
+```
+yt-dlp --cookies-from-browser <brower-in-use> -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' https://www.twitch.tv/videos/<video-number>
+yt-dlp --cookies-from-browser firefox -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' https://www.twitch.tv/videos/31337
 ```
