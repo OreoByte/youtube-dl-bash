@@ -16,8 +16,11 @@ Enjoy!
 
 # Updated for new version  opt_youtube-dl (Now with IFS built in) 
 ```
+
 { Youtube-DL Help Menu. ';..;' }
 -----------------------------------------------------
+-S // -E || Start Time or End Time of the download video <hours:minutes:seconds>
+
 -l | A Youtube Link/URL To Download.
 -t | File type (mp3,a,audio) OR (mp4,v,video).
 -f | File with a list of multiple youtube URL to all download. With each URL on its own new line.
@@ -42,7 +45,10 @@ Examples:
 # Download URL with a custom tool path if yt-dlp is NOT in your current path. Like git cloned from GitHub
 ./opt_youtube-dl.sh -f url_file -t a -y ~/Music/yt-dlp/yt-dlp.sh
 
-# Normalize Audio
+# Download part of the URL between a custom starting and ending timestap
+./opt_youtube-dl.sh -l <url> -t audio -S 0:0:14 -E 0:2:55
+
+# Normalize Audio. NOTE must have a forward slash at the end of the directory to work properly
 ./opt_youtube-dl.sh -n .
 ./opt_youtube-dl.sh -n ~/Music/new_music/
 ```
