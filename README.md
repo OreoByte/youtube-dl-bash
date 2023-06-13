@@ -18,7 +18,7 @@ Enjoy!
 ```
 
 { Youtube-DL Help Menu. ';..;' }
------------------------------------------------------
+--------------------------------------------------------------------------------------
 -S // -E || Start Time or End Time of the download video <hours:minutes:seconds>
 
 -l | A Youtube Link/URL To Download.
@@ -26,6 +26,7 @@ Enjoy!
 -f | File with a list of multiple youtube URL to all download. With each URL on its own new line.
 -y | Manually set the tool path to (yt-dlp) from (github) if the original path is broken
 -n | Normalize the audio of all the .mp3 files from a desired directory
+-b | Leverage browser session cookie to download video/audio you have subbed to. Like from Twitch. {firefox, chrome, chromium, or whatever you are signed into}
 -c | Use the URL saved to the secondary Ctrl-C/Ctrl-v Clipboard. Instead of having put the link in the command with xclip.
 
 Examples:
@@ -47,6 +48,9 @@ Examples:
 
 # Download part of the URL between a custom starting and ending timestap
 ./opt_youtube-dl.sh -l <url> -t audio -S 0:0:14 -E 0:2:55
+
+# Download URL with a browser's Session Cookie
+./opt_youtube-dl.sh -l <url> -t video -b chromium
 
 # Normalize Audio. NOTE must have a forward slash at the end of the directory to work properly
 ./opt_youtube-dl.sh -n .
