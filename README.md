@@ -91,7 +91,7 @@ chmod +x ./opt_youtube-dl_v1.4.sh
 
 ## Downloading a Twitch VOD the browser's cookie when it's Subs only
 
-Not build into the script yet ):
+* Built in with -b option but here is the one line version examples of it.
 
 ```
 yt-dlp --cookies-from-browser <brower-in-use> -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' https://www.twitch.tv/videos/<video-number>
