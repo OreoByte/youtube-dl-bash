@@ -1,25 +1,57 @@
 #!/bin/bash
 man_help () {
-	echo -e "\n{ Youtube-DL Help Menu. ';..;' }\n--------------------------------------------------------------------------------------"
-	echo -e "-S // -E || Start Time or End Time of the download video <hours:minutes:seconds>\n"
-	echo -e "-l | A Youtube Link/URL To Download.\n-t | File type (mp3,a,audio) OR (mp4,v,video)."
-	echo -e "-f | File with a list of multiple youtube URL to all download. With each URL on its own new line."
-	echo -e "-y | Manually set the tool path to (yt-dlp) from (github) if the original path is broken"
-	echo -e "-n | Normalize the audio of all the .mp3 files from a desired directory"
-	echo -e "-b | Leverage browser session cookie to download video/audio you have subbed to. Like from Twitch. {firefox, chrome, chromium, or whatever you are signed into}"
-	echo -e "-c | Use the URL saved to the secondary Ctrl-C/Ctrl-v Clipboard. Instead of having put the link in the command with xclip.\n\nExamples:"
-	echo -e "# Download video as MP3 file.\n./opt_youtube-dl.sh -t mp3 -l https://youtube.com/watch?=link\n"
-	echo -e "# Download video as MP4 file.\n./opt_youtube-dl.sh -l https://Youtube.com/watch?link -t video\n"
-	echo -e "# Download from URL file.\n./opt_youtube-dl.sh -f yt_url_list.txt -t audio\n"
-	echo -e "# Download a single URL that is saved to your secondary Ctrl-C/Ctrl-V clipboard read with xclip.\n./opt_youtube-dl.sh -c -t mp3"
-	echo -e "./opt_youtube-dl.sh -c -t a"
-	echo -e "\n# Download URL with a custom tool path if yt-dlp is NOT in your current path. Like git cloned from GitHub"
-	echo -e "./opt_youtube-dl.sh -f url_file -t a -y ~/Music/yt-dlp/yt-dlp.sh\n"
-	echo -e "# Download part of the URL between a custom starting and ending timestap"
-	echo -e "./opt_youtube-dl.sh -l <url> -t audio -S 0:0:14 -E 0:2:55\n"
-	echo -e "# Download URL with a browser's Session Cookie\n./opt_youtube-dl.sh -l <url> -t video -b chromium\n"
-	echo -e "# Normalize Audio. NOTE must have a forward slash at the end of the directory to work properly\n./opt_youtube-dl.sh -n .\n./opt_youtube-dl.sh -n ~/Music/new_music/"
-	exit 1
+cat <<eof
+--------------------------------------------------------------------------------------
+{ Youtube-DL Help Menu. ';..;' }
+--------------------------------------------------------------------------------------
+-S // -E || Start Time or End Time of the download video <hours:minutes:seconds>
+-l | A Youtube Link/URL To Download.\n-t | File type (mp3,a,audio) OR (mp4,v,video).
+-f | File with a list of multiple youtube URL to all download. With each URL on its own new line.
+-y | Manually set the tool path to (yt-dlp) from (github) if the original path is broken
+-n | Normalize the audio of all the .mp3 files from a desired directory
+-b | Leverage browser session cookie to download video/audio you have subbed to. Like from Twitch. {firefox, chrome, chromium, or whatever you are signed into}
+-q | Set MP4 Video Quality to something else other than (bestvideo) to prevent poor playback on older devices like smart phones
+-c | Use the URL saved to the secondary Ctrl-C/Ctrl-v Clipboard. Instead of having put the link in the command with xclip.
+
+-p | Change the resolution of the MP4 from -t video to another resolution so it works better on older devices.
+-o | Output filename of the new MP4 from the -v <video_resolution> option. (p,phone) 0r L:W -> 1920:1080.
+-v | Original MP4 Video that you want to change the resolution with.
+
+---------------------------------------------------------------------------------------------------------------
+Examples:
+# Download video as MP3 file.
+./opt_youtube-dl.sh -t mp3 -l https://youtube.com/watch?=link\n
+
+# Download video as MP4 file.
+./opt_youtube-dl.sh -l https://Youtube.com/watch?link -t video\n
+
+# Download from URL file.
+./opt_youtube-dl.sh -f yt_url_list.txt -t audio
+
+# Download a single URL that is saved to your secondary Ctrl-C/Ctrl-V clipboard read with xclip.
+./opt_youtube-dl.sh -c -t mp3
+./opt_youtube-dl.sh -c -t a
+
+# Download URL with a custom tool path if yt-dlp is NOT in your current path. Like git cloned from GitHub
+./opt_youtube-dl.sh -f url_file -t a -y ~/Music/yt-dlp/yt-dlp.sh
+
+# Download part of the URL between a custom starting and ending timestap
+./opt_youtube-dl.sh -l <url> -t audio -S 0:0:14 -E 0:2:55
+
+# Download URL with a browser's Session Cookie
+./opt_youtube-dl.sh -l <url> -t video -b chromium
+
+# Normalize Audio. NOTE must have a forward slash at the end of the directory to work properly
+./opt_youtube-dl.sh -n .
+./opt_youtube-dl.sh -n ~/Music/new_music/
+
+# Change the resolution of a downloaded Video
+./opt_youtube-dl.sh -v <org-video.mp4> -p <option> -o <mod_vid.mp4>
+
+./opt_youtube-dl.sh -v vid.mp4 -p phone -o mod_vid.mp4
+./opt_youtube-dl.sh -v vid.mp4 -p '4096×2160' -o mod_vid.mp4
+eof
+exit 1
 }
 if [ -z "$1" ]; then
 	man_help
@@ -36,14 +68,25 @@ else
 			-n) norm_audio=$2;;
 			-c) url_clip=$(xclip -o -sel clip);;
 			-b) browser=$2;;
+			-q) mp4_quality=$2;;
 			-S) start_time=$2;;
 			-E) end_time=$2;;
+			-p) pixel_opt=$2;;
+			-v) mp4_video=$2;;
+			-o) mp4_output=$2;;
 			-h) man_help
 		esac
 		shift
 	done
 fi
 yt_tool="yt-dlp"
+if [[ "$pixel_opt" != '' ]]; then
+	if [[ "$pixel_opt" == "phone" ]] || [[ "$pixel_opt" == "p" ]]; then
+		ffmpeg -i "$mp4_video" -vf "scale=1920:1080" "$mp4_output"
+	else
+		ffmpeg -i "$mp4_video" -vf "scale=$pixel_opt" "$mp4_output"
+	fi
+fi
 if [[ "$norm_audio" != '' ]]; then
 	if [[ "$norm_audio" == '.' ]]; then
 		mp3gain -c -r *.mp3
